@@ -18,7 +18,7 @@ public class ReentrantLockProducer implements Producer {
     }
 
     @Override
-    public LinkedList<Integer> getList() {
+    public LinkedList<Integer> getCollection() {
         return list;
     }
 
@@ -33,17 +33,17 @@ public class ReentrantLockProducer implements Producer {
         while(true) {
             try{
                 getLock().lock();
-                while(getList().size() == LIMIT_OF_LIST) {
+                while(getCollection().size() == LIMIT_OF_LIST) {
                     System.out.println("List full, gonna wait now!");
                     condition.await();
                 }
                 System.out.println("Adding number : " + count++);
-                getList().add(count);
+                getCollection().add(count);
                 condition.signal();
             } finally {
                 getLock().unlock();
             }
-            System.out.println("Queue size after adding :"+getList().size());
+            System.out.println("Queue size after adding :"+ getCollection().size());
         }
     }
 }

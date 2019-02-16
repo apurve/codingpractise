@@ -16,7 +16,7 @@ public class DefaultProducerImpl implements Producer {
     }
 
     @Override
-    public LinkedList<Integer> getList() {
+    public LinkedList<Integer> getCollection() {
         return list;
     }
 

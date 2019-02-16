@@ -1,6 +1,6 @@
 package leave.nucleus.threading.producerconsumer;
 
-public interface Producer extends ListProvider, LockProvider {
+public interface Producer extends CollectionProvider, LockProvider {
 
     int LIMIT_OF_LIST = 10;
 
@@ -8,13 +8,13 @@ public interface Producer extends ListProvider, LockProvider {
         int value = 0;
         while (true) {
             synchronized (getLock()) {
-                System.out.println("Queue size before producing : " + getList().size());
-                while (getList().size() == LIMIT_OF_LIST)
+                System.out.println("Queue size before producing : " + getCollection().size());
+                while (getCollection().size() == LIMIT_OF_LIST)
                     getLock().wait();
-                getList().add(value++);
+                getCollection().add(value++);
                 getLock().notify();
             }
-            Thread.sleep(400);
+            Thread.sleep(200);
         }
     }
 

@@ -1,16 +1,21 @@
 package leave.nucleus.threading.producerconsumer;
 
-import java.util.LinkedList;
+import java.util.Iterator;
 
-public interface Consumer extends ListProvider, LockProvider {
+public interface Consumer extends CollectionProvider, LockProvider {
 
     default void consume() throws InterruptedException {
         while (true) {
             synchronized (getLock()) {
-                while (getList().size() == 0)
+                while (getCollection().size() == 0)
                     getLock().wait();
-                System.out.println("Queue size before taking :" + getList().size());
-                Integer value = getList().removeFirst();
+                System.out.println("Queue size before taking :" + getCollection().size());
+                Iterator<Integer> integerIterator = getCollection().iterator();
+                Integer value = null;
+                while(integerIterator.hasNext()) {
+                    value = integerIterator.next();
+                    integerIterator.remove();
+                }
                 System.out.println("Took value :"+value);
                 getLock().notify();
             }

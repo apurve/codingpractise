@@ -18,7 +18,7 @@ public class ReentrantLockConsumer implements Consumer {
     }
 
     @Override
-    public LinkedList<Integer> getList() {
+    public LinkedList<Integer> getCollection() {
         return list;
     }
 
@@ -32,16 +32,16 @@ public class ReentrantLockConsumer implements Consumer {
         while (true) {
             try {
                 getLock().lock();
-                while (getList().size() == 0) {
+                while (getCollection().size() == 0) {
                     System.out.println("List is empty, gonna wait now!");
                     condition.await();
                 }
-                System.out.println("Removed number : " + getList().removeFirst());
+                System.out.println("Removed number : " + getCollection().removeFirst());
                 condition.signal();
             } finally {
                 getLock().unlock();
             }
-            System.out.println("Queue size after removing :"+getList().size());
+            System.out.println("Queue size after removing :"+ getCollection().size());
             Thread.sleep(500);
         }
     }

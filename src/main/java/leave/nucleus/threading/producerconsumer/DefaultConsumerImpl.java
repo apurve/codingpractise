@@ -14,7 +14,7 @@ public class DefaultConsumerImpl implements Consumer {
     }
 
     @Override
-    public LinkedList<Integer> getList() {
+    public LinkedList<Integer> getCollection() {
         return list;
     }
 
