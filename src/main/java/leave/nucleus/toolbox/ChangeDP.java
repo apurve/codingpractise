@@ -18,7 +18,6 @@ public class ChangeDP {
                 }
             }
         }
-
         return moneyArray[m];
     }
 
