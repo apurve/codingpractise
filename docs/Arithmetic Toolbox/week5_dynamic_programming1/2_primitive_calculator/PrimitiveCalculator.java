@@ -1,10 +1,13 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 public class PrimitiveCalculator {
-    private static List<Integer> optimal_sequence(int n) {
+
+    public static List<Integer> optimal_sequence(int n) {
         List<Integer> sequence = new ArrayList<Integer>();
         while (n >= 1) {
-            sequence.add(n);
             if (n % 3 == 0) {
                 n /= 3;
             } else if (n % 2 == 0) {
@@ -12,6 +15,7 @@ public class PrimitiveCalculator {
             } else {
                 n -= 1;
             }
+            sequence.add(n);
         }
         Collections.reverse(sequence);
         return sequence;
@@ -27,4 +31,3 @@ public class PrimitiveCalculator {
         }
     }
 }
-
