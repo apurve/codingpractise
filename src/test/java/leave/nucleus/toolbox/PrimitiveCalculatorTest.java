@@ -30,7 +30,7 @@ public class PrimitiveCalculatorTest {
     @Test
     public void testPrimitiveCalculatorForMoreThanMaximumDividend() {
         Assert.assertEquals(14, PrimitiveCalculator.optimal_sequence(96234).size()-1);
-        /* Input:
+        /*
         Your output:
         15
         0 1 2 4 5 10 11 22 66 198 594 1782 5346 16038 16039 32078
