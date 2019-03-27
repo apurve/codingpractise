@@ -24,24 +24,43 @@ class Bracket {
 }
 
 class check_brackets {
+
+    public static String SUCCESS = "Success";
+
     public static void main(String[] args) throws IOException {
         InputStreamReader input_stream = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input_stream);
         String text = reader.readLine();
 
+        System.out.print(checkBrackets(text));
+
+        // Printing answer, write your code here
+    }
+
+    public static String checkBrackets(String text) {
         Stack<Bracket> opening_brackets_stack = new Stack<Bracket>();
         for (int position = 0; position < text.length(); ++position) {
             char next = text.charAt(position);
 
             if (next == '(' || next == '[' || next == '{') {
                 // Process opening bracket, write your code here
+                opening_brackets_stack.push(new Bracket(next, position));
             }
 
             if (next == ')' || next == ']' || next == '}') {
                 // Process closing bracket, write your code here
+                if(opening_brackets_stack.empty())
+                    return String.valueOf(position+1);
+                Bracket bracket = opening_brackets_stack.pop();
+                if(!bracket.Match(next))
+                    return String.valueOf(position+1);
             }
         }
 
-        // Printing answer, write your code here
+        if(!opening_brackets_stack.empty()) {
+            return String.valueOf(opening_brackets_stack.pop().position+1);
+        }
+
+        return SUCCESS;
     }
 }

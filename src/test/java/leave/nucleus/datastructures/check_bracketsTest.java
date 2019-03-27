@@ -41,6 +41,11 @@ public class check_bracketsTest {
     }
 
     @Test
+    public void test10() {
+        Assert.assertEquals("1", check_brackets.checkBrackets("}"));
+    }
+
+    @Test
     public void test8() {
         Assert.assertEquals(check_brackets.SUCCESS, check_brackets.checkBrackets("foo(bar);"));
     }

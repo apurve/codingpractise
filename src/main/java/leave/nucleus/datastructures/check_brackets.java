@@ -51,6 +51,8 @@ class check_brackets {
 
             if (next == ')' || next == ']' || next == '}') {
                 // Process closing bracket, write your code here
+                if(opening_brackets_stack.empty())
+                    return String.valueOf(position+1);
                 Bracket bracket = opening_brackets_stack.pop();
                 if(!bracket.Match(next))
                     return String.valueOf(position+1);
