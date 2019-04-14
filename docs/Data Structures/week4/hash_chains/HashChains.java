@@ -1,6 +1,7 @@
+package leave.nucleus.datastructures;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -8,14 +9,21 @@ public class HashChains {
 
     private FastScanner in;
     private PrintWriter out;
-    
-	// store all strings in one list
+    // store all strings in one list
     private List<String> elems;
-    
-	// for hash function
+    // for hash function
     private int bucketCount;
     private int prime = 1000000007;
     private int multiplier = 263;
+
+    private List<String>[] hashTable;
+
+    public HashChains() {
+        hashTable = new List[multiplier];
+        for (int i = 0; i < multiplier; i++) {
+            hashTable[i] = new ArrayList<String>();
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         new HashChains().processQueries();
@@ -45,7 +53,7 @@ public class HashChains {
         // out.flush();
     }
 
-    private void processQuery(Query query) {
+    private void processQuery_naive(Query query) {
         switch (query.type) {
             case "add":
                 if (!elems.contains(query.s))
@@ -70,6 +78,35 @@ public class HashChains {
                 throw new RuntimeException("Unknown query: " + query.type);
         }
     }
+
+    private void processQuery(Query query) {
+        switch (query.type) {
+            case "add":
+                if (! hashTable[hashFunc(query.s)].contains(query.s))
+                    hashTable[hashFunc(query.s)].add(0, query.s);
+                break;
+            case "del":
+                if (hashTable[hashFunc(query.s)].contains(query.s))
+                    hashTable[hashFunc(query.s)].remove(query.s);
+                break;
+            case "find":
+                writeSearchResult(hashTable[hashFunc(query.s)].contains(query.s));
+                break;
+            case "check":
+                for (String cur : hashTable[query.ind])
+                    if (hashFunc(cur) == query.ind)
+                        out.print(cur + " ");
+                out.println();
+                // Uncomment the following if you want to play with the program interactively.
+                // out.flush();
+                break;
+            default:
+                throw new RuntimeException("Unknown query: " + query.type);
+        }
+    }
+
+
+
 
     public void processQueries() throws IOException {
         elems = new ArrayList<>();

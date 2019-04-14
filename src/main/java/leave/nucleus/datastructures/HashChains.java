@@ -1,20 +1,29 @@
 package leave.nucleus.datastructures;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class HashChains {
 
     private FastScanner in;
     private PrintWriter out;
-
     // store all strings in one list
-    private Map<Integer, String> elems;
-
+    private List<String> elems;
     // for hash function
     private int bucketCount;
     private int prime = 1000000007;
     private int multiplier = 263;
+
+    private List<String>[] hashTable;
+
+    public HashChains() {
+        hashTable = new List[multiplier];
+        for (int i = 0; i < multiplier; i++) {
+            hashTable[i] = new ArrayList<String>();
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         new HashChains().processQueries();
@@ -44,22 +53,24 @@ public class HashChains {
         // out.flush();
     }
 
-    private void processQuery(Query query) {
+    private void processQuery_naive(Query query) {
         switch (query.type) {
             case "add":
-                elems.put(hashFunc(query.s), query.s);
+                if (!elems.contains(query.s))
+                    elems.add(0, query.s);
                 break;
             case "del":
-                elems.remove(hashFunc(query.s));
+                if (elems.contains(query.s))
+                    elems.remove(query.s);
                 break;
             case "find":
-                writeSearchResult(elems.containsKey(hashFunc(query.s)));
+                writeSearchResult(elems.contains(query.s));
                 break;
             case "check":
-                /*for (String cur : elems.get(query.ind))
+                for (String cur : elems)
                     if (hashFunc(cur) == query.ind)
                         out.print(cur + " ");
-                */out.println();
+                out.println();
                 // Uncomment the following if you want to play with the program interactively.
                 // out.flush();
                 break;
@@ -68,8 +79,37 @@ public class HashChains {
         }
     }
 
+    private void processQuery(Query query) {
+        switch (query.type) {
+            case "add":
+                if (! hashTable[hashFunc(query.s)].contains(query.s))
+                    hashTable[hashFunc(query.s)].add(0, query.s);
+                break;
+            case "del":
+                if (hashTable[hashFunc(query.s)].contains(query.s))
+                    hashTable[hashFunc(query.s)].remove(query.s);
+                break;
+            case "find":
+                writeSearchResult(hashTable[hashFunc(query.s)].contains(query.s));
+                break;
+            case "check":
+                for (String cur : hashTable[query.ind])
+                    if (hashFunc(cur) == query.ind)
+                        out.print(cur + " ");
+                out.println();
+                // Uncomment the following if you want to play with the program interactively.
+                // out.flush();
+                break;
+            default:
+                throw new RuntimeException("Unknown query: " + query.type);
+        }
+    }
+
+
+
+
     public void processQueries() throws IOException {
-        elems = new HashMap<>();
+        elems = new ArrayList<>();
         in = new FastScanner();
         out = new PrintWriter(new BufferedOutputStream(System.out));
         bucketCount = in.nextInt();
