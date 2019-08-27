@@ -51,14 +51,14 @@ public class HashSubstring {
         return occurrences;
     }
 
-    private static List<Integer> getOccurrences(Data input) {
+    public static List<Integer> getOccurrences(Data input) {
         String s = input.pattern, t = input.text;
         int m = s.length(), n = t.length();
         List<Integer> occurrences = new ArrayList<Integer>();
 
         long pHash = polyHash(input.pattern);
 
-        long[] H = precomputeHashes(input);
+        long[] H = preComputeHashes(input);
 
         for (int i = 0; i + m <= n; ++i) {
             if (pHash != H[i]) {
@@ -72,14 +72,14 @@ public class HashSubstring {
         return occurrences;
     }
 
-    private static long polyHash(String s) {
+    public static long polyHash(String s) {
         long hash = 0;
         for (int i = s.length() - 1; i >= 0; --i)
             hash = (hash * x + s.charAt(i)) % prime;
         return hash;
     }
 
-    private static long[] precomputeHashes(Data input) {
+    public static long[] preComputeHashes(Data input) {
         int t = input.text.length();
         int p = input.pattern.length();
 

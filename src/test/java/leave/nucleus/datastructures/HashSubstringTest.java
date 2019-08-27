@@ -10,12 +10,11 @@ public class HashSubstringTest {
 
     @Test
     public void testPreComputeHashes() {
-        char[] text = "abacaba".toCharArray();
-        char[] pattern = "aba".toCharArray();
-        long[] hashesFast = HashSubstring.preComputeHashes(text, pattern);
-        long[] hashes = new long[text.length - pattern.length + 1];
-        for (int i = 0; i + pattern.length <= text.length; ++i) {
-            hashes[i] = HashSubstring.hashCode(text, i, pattern.length);
+        HashSubstring.Data input = new HashSubstring.Data("aba", "abacaba");
+        long[] hashesFast = HashSubstring.preComputeHashes(input);
+        long[] hashes = new long[input.text.length() - input.pattern.length() + 1];
+        for (int i = 0; i + input.pattern.length() < input.text.length(); --i) {
+            hashes[i] = HashSubstring.polyHash(input.text.substring(i, input.pattern.length()));
         }
         Assert.assertArrayEquals(hashes, hashesFast);
     }
