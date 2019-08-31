@@ -1,7 +1,6 @@
 package leave.nucleus.graphs;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Reachability {
@@ -9,16 +8,8 @@ public class Reachability {
     public static boolean reach(ArrayList<Integer>[] adj, int x, int y) {
         //write your code here
         boolean[] visited = new boolean[adj.length];
-        explore(adj, x, visited);
+        GraphExplorationUtils.explore(adj, x, visited);
         return visited[y];
-    }
-
-    private static void explore(ArrayList<Integer>[] adj, int x, boolean[] visited) {
-        visited[x] = true;
-        for(Integer neighbour : adj[x]) {
-            if(!visited[neighbour])
-                explore(adj, neighbour, visited);
-        }
     }
 
     public static void main(String[] args) {

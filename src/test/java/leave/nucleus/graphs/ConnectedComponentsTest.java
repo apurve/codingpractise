@@ -3,8 +3,6 @@ package leave.nucleus.graphs;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class ConnectedComponentsTest {
 
     @Test
@@ -15,7 +13,7 @@ public class ConnectedComponentsTest {
                 {1,2},
                 {3,2}
         };
-        Assert.assertEquals(2, ConnectedComponents.numberOfComponents(GraphsRepresentationUtil.getAdjacencyList(n, m, vertices)));
+        Assert.assertEquals(2, ConnectedComponents.numberOfComponents(GraphRepresentationUtil.getAdjacencyList(n, m, vertices)));
     }
 
 }

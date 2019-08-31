@@ -10,19 +10,11 @@ public class ConnectedComponents {
         boolean[] visited = new boolean[adj.length];
         for(int i = 0; i < visited.length; i++) {
             if(!visited[i]) {
-                explore(adj, i, visited);
+                GraphExplorationUtils.explore(adj, i, visited);
                 connectedComponents++;
             }
         }
         return connectedComponents;
-    }
-
-    private static void explore(ArrayList<Integer>[] adj, int x, boolean[] visited) {
-        visited[x] = true;
-        for(Integer neighbour : adj[x]) {
-            if(!visited[neighbour])
-                explore(adj, neighbour, visited);
-        }
     }
 
     public static void main(String[] args) {

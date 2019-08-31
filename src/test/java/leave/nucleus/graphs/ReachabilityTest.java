@@ -3,10 +3,6 @@ package leave.nucleus.graphs;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
-
 public class ReachabilityTest {
 
     @Test
@@ -19,7 +15,7 @@ public class ReachabilityTest {
                 {4,3},
                 {1,4}
         };
-        Assert.assertTrue(Reachability.reach(GraphsRepresentationUtil.getAdjacencyList(n, m, vertices),1-1,4-1));
+        Assert.assertTrue(Reachability.reach(GraphRepresentationUtil.getAdjacencyList(n, m, vertices), 1-1, 4-1));
     }
 
     @Test
@@ -30,7 +26,7 @@ public class ReachabilityTest {
                 {1,2},
                 {3,2}
         };
-        Assert.assertFalse(Reachability.reach(GraphsRepresentationUtil.getAdjacencyList(n, m, vertices),1-1,4-1));
+        Assert.assertFalse(Reachability.reach(GraphRepresentationUtil.getAdjacencyList(n, m, vertices), 1-1, 4-1));
     }
 
 

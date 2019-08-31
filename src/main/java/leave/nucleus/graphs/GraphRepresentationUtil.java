@@ -2,7 +2,7 @@ package leave.nucleus.graphs;
 
 import java.util.ArrayList;
 
-public class GraphsRepresentationUtil {
+public class GraphRepresentationUtil {
 
     public static ArrayList<Integer>[] getAdjacencyList(int n, int m, int[][] vertices) {
         ArrayList<Integer>[] adj = (ArrayList<Integer>[])new ArrayList[n];
@@ -18,4 +18,5 @@ public class GraphsRepresentationUtil {
         }
         return adj;
     }
+
 }
