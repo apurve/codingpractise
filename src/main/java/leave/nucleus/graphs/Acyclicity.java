@@ -1,3 +1,5 @@
+package leave.nucleus.graphs;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -47,3 +49,4 @@ public class Acyclicity {
         System.out.println(acyclic(adj)?1:0);
     }
 }
+
