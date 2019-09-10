@@ -19,4 +19,17 @@ public class GraphRepresentationUtil {
         return adj;
     }
 
+    public static ArrayList<Integer>[] getDirectedAdjacencyList(int n, int m, int[][] vertices) {
+        ArrayList<Integer>[] adj = (ArrayList<Integer>[])new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            adj[i] = new ArrayList<Integer>();
+        }
+        for (int i = 0; i < m; i++) {
+            int x, y;
+            x = vertices[i][0];
+            y = vertices[i][1];
+            adj[x - 1].add(y - 1);
+        }
+        return adj;
+    }
 }
