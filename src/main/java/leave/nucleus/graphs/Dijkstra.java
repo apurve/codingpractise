@@ -1,3 +1,5 @@
+package leave.nucleus.graphs;
+
 import java.util.*;
 
 public class Dijkstra {
@@ -69,12 +71,4 @@ public class Dijkstra {
         System.out.println(distance(adj, x, y));
     }
 
-    static class Vertex {
-        public Vertex(int node, int cost) {
-            this.node = node;
-            this.cost = cost;
-        }
-        public Integer node;
-        public Integer cost;
-    }
 }

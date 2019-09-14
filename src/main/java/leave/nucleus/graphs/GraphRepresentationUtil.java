@@ -32,4 +32,21 @@ public class GraphRepresentationUtil {
         }
         return adj;
     }
+
+    public static ArrayList<Vertex>[] getWeightedAdjacencyList(int n, int m, int[][] vertices) {
+        ArrayList<Vertex>[] adj = (ArrayList<Vertex>[])new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            adj[i] = new ArrayList<Vertex>();
+        }
+        for (int i = 0; i < m; i++) {
+            int x, y, w;
+            x = vertices[i][0];
+            y = vertices[i][1];
+            w = vertices[i][2];
+            Vertex vertex = new Vertex(y-1, w);
+            adj[x - 1].add(vertex);
+        }
+        return adj;
+    }
+
 }

@@ -22,12 +22,12 @@ public class BFS {
         return distance[t] < adj.length ? distance[t] : -1;
     }
 
-    private static int[] initializeDistanceArray(int length, int root) {
+    private static int[] initializeDistanceArray(int length, int source) {
         int[] distance = new int[length];
         for(int i = 0; i < distance.length; i++) {
             distance[i] = distance.length + 1;
         }
-        distance[root] = 0;
+        distance[source] = 0;
         return distance;
     }
 
