@@ -17,7 +17,20 @@ public class NegativeCycleTest {
                 {2,3,2},
                 {3,1,1}
         };
-        Assert.assertEquals(1, NegativeCycle.negativeCycle(GraphRepresentationUtil.getWeightedAdjacencyList(n, m, vertices)));
+        Assert.assertTrue(NegativeCycle.negativeCycle(GraphRepresentationUtil.getWeightedAdjacencyList(n, m, vertices)));
+    }
+
+    @Test
+    public void testCase2() {
+        int n = 4; // vertices
+        int m = 4; // edges
+        int [][] vertices = {
+                {1,2,1},
+                {4,1,2},
+                {2,3,2},
+                {3,1,-5}
+        };
+        Assert.assertTrue(NegativeCycle.negativeCycle(GraphRepresentationUtil.getWeightedAdjacencyList(n, m, vertices)));
     }
 
 }

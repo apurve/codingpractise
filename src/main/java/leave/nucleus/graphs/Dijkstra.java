@@ -8,7 +8,7 @@ public class Dijkstra {
         int[] distance = new int[adj.length];
         int[] previous = new int[adj.length];
         initializeDistanceAndPreviousArray(distance, previous, s);
-        PriorityQueue<Vertex> priorityQueue = initializePriorityQueue(adj, s);
+        PriorityQueue<Vertex> priorityQueue = initializePriorityQueue(s);
         while (!priorityQueue.isEmpty()) {
             Vertex visiting = priorityQueue.remove();
             for(Vertex neighbour : adj[visiting.node]) {
@@ -24,20 +24,14 @@ public class Dijkstra {
         return distance[t] < Integer.MAX_VALUE ? distance[t] : -1;
     }
 
-    private static PriorityQueue<Vertex> initializePriorityQueue(ArrayList<Vertex>[] adj, int source) {
+    private static PriorityQueue<Vertex> initializePriorityQueue(int source) {
         PriorityQueue<Vertex> priorityQueue = new PriorityQueue<>(new Comparator<Vertex>() {
             @Override
             public int compare(Vertex o1, Vertex o2) {
                 return o1.cost.compareTo(o2.cost);
             }
         });
-        Vertex sourceVertex = new Vertex(source,0);
-        priorityQueue.add(sourceVertex);
-        /*for(int i = 0; i < adj.length; i++) {
-            for(Vertex vertex : adj[i]) {
-                priorityQueue.add(vertex);
-            }
-        }*/
+        priorityQueue.add(new Vertex(source,0));
         return priorityQueue;
     }
 

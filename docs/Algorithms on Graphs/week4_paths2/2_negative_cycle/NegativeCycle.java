@@ -1,12 +1,51 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class NegativeCycle {
+
     private static int negativeCycle(ArrayList<Integer>[] adj, ArrayList<Integer>[] cost) {
         // write your code here
+        Map<Integer, Integer> distance = new HashMap<>();
+
+        // using a virtual source node with 0 distance to all nodes
+        // i.e. null values in map are 0, not inf
+
+        for (int j = 0; j < adj.length - 1; j++) { //v - 1 iteration
+            for (int u = 0; u < adj.length; u++) {
+                List<Integer> adjList = adj[u];
+                List<Integer> costList = cost[u];
+                for (int k = 0; k < adjList.size(); k++) {
+                    int v = adjList.get(k);
+                    int w = costList.get(k);
+                    int dist = distance.getOrDefault(v, 0);
+                    int newDist = distance.getOrDefault(u, 0) + w;
+
+                    if (dist > newDist) distance.put(v, newDist); //relax
+                }
+            }
+        }
+
+        // negative cycle iteration, refactor?
+        for (int u = 0; u < adj.length; u++) {
+            List<Integer> adjList = adj[u];
+            List<Integer> costList = cost[u];
+            for (int k = 0; k < adjList.size(); k++) {
+                int v = adjList.get(k);
+                int w = costList.get(k);
+                int dist = distance.getOrDefault(v, 0);
+                int newDist = distance.getOrDefault(u, 0) + w;
+
+                if (dist > newDist) return 1;
+            }
+        }
+
         return 0;
     }
 
+    //default main
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
@@ -27,5 +66,5 @@ public class NegativeCycle {
         }
         System.out.println(negativeCycle(adj, cost));
     }
-}
 
+}
