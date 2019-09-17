@@ -1,72 +1,79 @@
 package leave.nucleus.graphs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class NegativeCycle {
 
-    private static int negativeCycle(ArrayList<Integer>[] adj, ArrayList<Integer>[] cost) {
-        // write your code here
-        Map<Integer, Integer> distance = new HashMap<>();
-
-        // using a virtual source node with 0 distance to all nodes
-        // i.e. null values in map are 0, not inf
-
-        for (int j = 0; j < adj.length - 1; j++) { //v - 1 iteration
-            for (int u = 0; u < adj.length; u++) {
-                List<Integer> adjList = adj[u];
-                List<Integer> costList = cost[u];
-                for (int k = 0; k < adjList.size(); k++) {
-                    int v = adjList.get(k);
-                    int w = costList.get(k);
-                    int dist = distance.getOrDefault(v, 0);
-                    int newDist = distance.getOrDefault(u, 0) + w;
-
-                    if (dist > newDist) distance.put(v, newDist); //relax
-                }
+    public static boolean negativeCycle(ArrayList<Vertex>[] adj) {
+        int source = 0, iterations = adj.length - 1;
+        int[] distance = new int[adj.length];
+        int[] previous = new int[adj.length];
+        initializeDistanceAndPreviousArray(distance, previous, source);
+        PriorityQueue<Vertex> priorityQueue = initializePriorityQueue();
+        while (iterations >= 0) {
+            if(priorityQueue.isEmpty()) {
+                priorityQueue.add(new Vertex(source,0));
             }
-        }
-
-        // negative cycle iteration, refactor?
-        for (int u = 0; u < adj.length; u++) {
-            List<Integer> adjList = adj[u];
-            List<Integer> costList = cost[u];
-            for (int k = 0; k < adjList.size(); k++) {
-                int v = adjList.get(k);
-                int w = costList.get(k);
-                int dist = distance.getOrDefault(v, 0);
-                int newDist = distance.getOrDefault(u, 0) + w;
-
-                if (dist > newDist) return 1;
+            Vertex visiting = priorityQueue.remove();
+            for(Vertex neighbour : adj[visiting.node]) {
+                if(relax(distance, previous, priorityQueue, visiting, neighbour) && iterations == 0)
+                    return true;
             }
+            iterations--;
         }
-
-        return 0;
+        return false;
     }
 
-    //default main
+    private static PriorityQueue<Vertex> initializePriorityQueue() {
+        PriorityQueue<Vertex> priorityQueue = new PriorityQueue<>(new Comparator<Vertex>() {
+            @Override
+            public int compare(Vertex o1, Vertex o2) {
+                return o1.cost.compareTo(o2.cost);
+            }
+        });
+        return priorityQueue;
+    }
+
+    private static boolean relax(int[] distance, int[] previous, PriorityQueue<Vertex> priorityQueue, Vertex visiting, Vertex neighbour) {
+        if(distance[neighbour.node] > distance[visiting.node] + neighbour.cost) {
+            distance[neighbour.node] = distance[visiting.node] + neighbour.cost;
+            previous[neighbour.node] = visiting.node;
+            Vertex subPathVertex = new Vertex(neighbour.node, distance[neighbour.node]);
+            priorityQueue.add(subPathVertex);
+            return true;
+        }
+        return false;
+    }
+
+    private static int[] initializeDistanceAndPreviousArray(int[] distance, int[] previous, int source) {
+        for(int i = 0; i < distance.length; i++) {
+            distance[i] = Integer.MAX_VALUE;
+            previous[i] = -1;
+        }
+        distance[source] = 0;
+        return distance;
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int m = scanner.nextInt();
-        ArrayList<Integer>[] adj = (ArrayList<Integer>[])new ArrayList[n];
-        ArrayList<Integer>[] cost = (ArrayList<Integer>[])new ArrayList[n];
+        ArrayList<Vertex>[] adj = (ArrayList<Vertex>[]) new ArrayList[n];
         for (int i = 0; i < n; i++) {
-            adj[i] = new ArrayList<Integer>();
-            cost[i] = new ArrayList<Integer>();
+            adj[i] = new ArrayList<Vertex>();
         }
         for (int i = 0; i < m; i++) {
             int x, y, w;
             x = scanner.nextInt();
             y = scanner.nextInt();
             w = scanner.nextInt();
-            adj[x - 1].add(y - 1);
-            cost[x - 1].add(w);
+            Vertex node = new Vertex(y - 1, 2);
+            adj[x - 1].add(node);
         }
-        System.out.println(negativeCycle(adj, cost));
+        System.out.println(negativeCycle(adj) ? 1 : 0);
     }
 
 }

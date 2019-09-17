@@ -1,7 +1,9 @@
+package leave.nucleus.datastructures;
+
 import java.util.*;
 import java.io.*;
 
-public class is_bst_hard {
+public class is_bst {
     static class FastScanner {
         StringTokenizer tok = new StringTokenizer("");
         BufferedReader in;
@@ -15,10 +17,6 @@ public class is_bst_hard {
                 tok = new StringTokenizer(in.readLine());
             return tok.nextToken();
         }
-        long nextLong() throws IOException {
-            return Long.parseLong(next());
-        }
-
         int nextInt() throws IOException {
             return Integer.parseInt(next());
         }
@@ -26,11 +24,11 @@ public class is_bst_hard {
 
     public static class IsBST {
         static class Node {
-            long key;
+            int key;
             int left;
             int right;
 
-            Node(long key, int left, int right) {
+            Node(int key, int left, int right) {
                 this.left = left;
                 this.right = right;
                 this.key = key;
@@ -45,22 +43,22 @@ public class is_bst_hard {
             nodes = in.nextInt();
             tree = new Node[nodes];
             for (int i = 0; i < nodes; i++) {
-                tree[i] = new Node(in.nextLong(), in.nextInt(), in.nextInt());
+                tree[i] = new Node(in.nextInt(), in.nextInt(), in.nextInt());
             }
         }
 
         boolean isBinarySearchTree() {
-            return tree.length > 0 ? isBinarySearchTree(tree[0], Long.MIN_VALUE, Long.MAX_VALUE) : true;
+            return tree.length > 0 ? isBinarySearchTree(tree[0], Integer.MIN_VALUE, Integer.MAX_VALUE) : true;
         }
 
-        public boolean isBinarySearchTree(Node root, long min, long max) {
+        public boolean isBinarySearchTree(Node root, int min, int max) {
             if(root.key < min || root.key > max)
                 return false;
             boolean leftBST = true, rightBST = true;
             if(root.left != -1)
                 leftBST = isBinarySearchTree(tree[root.left], min, root.key - 1);
             if(root.right != -1)
-                rightBST = isBinarySearchTree(tree[root.right], root.key, max);
+                rightBST = isBinarySearchTree(tree[root.right], root.key + 1, max);
             return leftBST && rightBST;
         }
 
@@ -70,7 +68,7 @@ public class is_bst_hard {
         new Thread(null, new Runnable() {
             public void run() {
                 try {
-                    new is_bst_hard().run();
+                    new is_bst().run();
                 } catch (IOException e) {
                 }
             }
@@ -86,5 +84,4 @@ public class is_bst_hard {
             System.out.println("INCORRECT");
         }
     }
-
 }

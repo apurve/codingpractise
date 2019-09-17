@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class is_bst {
-    class FastScanner {
+    static class FastScanner {
         StringTokenizer tok = new StringTokenizer("");
         BufferedReader in;
 
@@ -20,8 +20,8 @@ public class is_bst {
         }
     }
 
-    public class IsBST {
-        class Node {
+    public static class IsBST {
+        static class Node {
             int key;
             int left;
             int right;
@@ -46,9 +46,20 @@ public class is_bst {
         }
 
         boolean isBinarySearchTree() {
-          // Implement correct algorithm here
-          return true;
+            return tree.length > 0 ? isBinarySearchTree(tree[0], Integer.MIN_VALUE, Integer.MAX_VALUE) : true;
         }
+
+        public boolean isBinarySearchTree(Node root, int min, int max) {
+            if(root.key < min || root.key > max)
+                return false;
+            boolean leftBST = true, rightBST = true;
+            if(root.left != -1)
+                leftBST = isBinarySearchTree(tree[root.left], min, root.key - 1);
+            if(root.right != -1)
+                rightBST = isBinarySearchTree(tree[root.right], root.key + 1, max);
+            return leftBST && rightBST;
+        }
+
     }
 
     static public void main(String[] args) throws IOException {
@@ -61,10 +72,11 @@ public class is_bst {
             }
         }, "1", 1 << 26).start();
     }
+
     public void run() throws IOException {
         IsBST tree = new IsBST();
         tree.read();
-        if (tree.solve()) {
+        if (tree.isBinarySearchTree()) {
             System.out.println("CORRECT");
         } else {
             System.out.println("INCORRECT");
