@@ -1,8 +1,10 @@
+package leave.nucleus.graphs;
+
 import java.util.Scanner;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 
-public class ConnectingPoints {
+public class ConnectingPointsKruskal {
     private static class Node {
         int x;
         int y;
