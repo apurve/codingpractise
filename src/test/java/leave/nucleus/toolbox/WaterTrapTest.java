@@ -48,4 +48,5 @@ public class WaterTrapTest {
         };
         Assert.assertEquals(0, WaterTrap.computeVolumeOfTrappedWater(grid));
     }
+
 }
