@@ -51,9 +51,9 @@ public class tree_orders {
         }
 
         private void inOrder(List<Integer> result, int i) {
-            if(left[i]!=-1)inOrder(result, left[i]);
+            if(left[i]!=-1) inOrder(result, left[i]);
             result.add(key[i]);
-            if(right[i]!=-1)inOrder(result, right[i]);
+            if(right[i]!=-1) inOrder(result, right[i]);
         }
 
         List<Integer> preOrder() {
@@ -64,8 +64,8 @@ public class tree_orders {
 
         private void preOrder(ArrayList<Integer> result, int i) {
             result.add(key[i]);
-            if(left[i]!=-1)preOrder(result, left[i]);
-            if(right[i]!=-1)preOrder(result, right[i]);
+            if(left[i]!=-1) preOrder(result, left[i]);
+            if(right[i]!=-1) preOrder(result, right[i]);
         }
 
         List<Integer> postOrder() {
@@ -75,8 +75,8 @@ public class tree_orders {
         }
 
         private void postOrder(ArrayList<Integer> result, int i) {
-            if(left[i]!=-1)postOrder(result, left[i]);
-            if(right[i]!=-1)postOrder(result, right[i]);
+            if(left[i]!=-1) postOrder(result, left[i]);
+            if(right[i]!=-1) postOrder(result, right[i]);
             result.add(key[i]);
         }
     }
