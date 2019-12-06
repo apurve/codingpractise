@@ -26,7 +26,7 @@ public class NonBlockingThreeThreadsIncreasingSequence {
         while (true) {
             int currentValue = value.get();
             if(currentValue % 3 == 1) {
-                System.out.println("One says "+currentValue);
+                System.out.println("T1 "+currentValue);
                 value.compareAndSet(currentValue, ++currentValue);
                 sleepForReadability();
             }
@@ -37,7 +37,7 @@ public class NonBlockingThreeThreadsIncreasingSequence {
         while (true) {
             int currentValue = value.get();
             if(currentValue % 3 == 2) {
-                System.out.println("Two says "+currentValue);
+                System.out.println("T2 "+currentValue);
                 value.compareAndSet(currentValue, ++currentValue);
                 sleepForReadability();
             }
@@ -48,7 +48,7 @@ public class NonBlockingThreeThreadsIncreasingSequence {
         while (true) {
             int currentValue = value.get();
             if(currentValue % 3 == 0) {
-                System.out.println("Three says "+currentValue);
+                System.out.println("T3 "+currentValue);
                 value.compareAndSet(currentValue, ++currentValue);
                 sleepForReadability();
             }
@@ -56,11 +56,11 @@ public class NonBlockingThreeThreadsIncreasingSequence {
     }
 
     private void sleepForReadability() {
-        try {
+        /*try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 }

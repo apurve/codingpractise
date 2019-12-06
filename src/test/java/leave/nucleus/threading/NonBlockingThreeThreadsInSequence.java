@@ -26,7 +26,7 @@ public class NonBlockingThreeThreadsInSequence {
         while(true) {
             int currentValue = value.get();
             if(currentValue == 1) {
-                System.out.println(currentValue);
+                System.out.println("T1 :" + currentValue);
                 value.compareAndSet(currentValue, 2);
             }
             sleepForReadability();
@@ -37,7 +37,7 @@ public class NonBlockingThreeThreadsInSequence {
         while(true) {
             int currentValue = value.get();
             if(currentValue == 2) {
-                System.out.println(currentValue);
+                System.out.println("T2 :" + currentValue);
                 value.compareAndSet(currentValue, 3);
             }
             sleepForReadability();
@@ -48,7 +48,7 @@ public class NonBlockingThreeThreadsInSequence {
         while(true) {
             int currentValue = value.get();
             if(currentValue == 3) {
-                System.out.println(currentValue);
+                System.out.println("T3 :" + currentValue);
                 value.compareAndSet(currentValue, 1);
             }
             sleepForReadability();
