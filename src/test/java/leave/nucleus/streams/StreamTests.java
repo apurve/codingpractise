@@ -58,6 +58,11 @@ public class StreamTests {
         Files.lines(Paths.get("C:\\Users\\Apurve Gupta\\Desktop\\application.log")).filter(str -> str.startsWith("Caused by")).forEach(System.out::println);
     }
 
+    @Test
+    public void readFromClasspatAndFilter() throws IOException {
+        Files.lines(Paths.get(ClassLoader.getSystemClassLoader().getResource("resources/application.log").getPath())).filter(str -> str.contains("LazyInitializationException")).forEach(System.out::println);
+    }
+
     List<String> dataSet = null;
 
     @Before
